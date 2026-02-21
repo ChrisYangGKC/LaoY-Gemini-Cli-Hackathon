@@ -1,0 +1,74 @@
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background: #f4f4f4;
+    color: #333;
+}
+
+header {
+    background: #333;
+    color: #fff;
+    padding: 1rem 0;
+    text-align: center;
+}
+
+.search-container {
+    width: 80%;
+    margin: 1rem auto;
+}
+
+#searchInput {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+#schedule-container {
+    width: 80%;
+    margin: 2rem auto;
+}
+
+.talk {
+    background: #fff;
+    margin-bottom: 1rem;
+    padding: 1.5rem;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+.talk h2 {
+    margin-top: 0;
+}
+
+.talk .time {
+    font-weight: bold;
+    color: #555;
+}
+
+.talk .speakers {
+    font-style: italic;
+    color: #777;
+}
+
+.talk .category {
+    margin-top: 0.5rem;
+}
+
+.talk .category span {
+    background: #eee;
+    padding: 0.3rem 0.6rem;
+    border-radius: 3px;
+    font-size: 0.9rem;
+    margin-right: 0.5rem;
+}
+
+.break {
+    background: #e0e0e0;
+    text-align: center;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    border-radius: 5px;
+}

@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tech Talks Today</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background: #f4f4f4;
+            color: #333;
+        }
+
+        header {
+            background: #333;
+            color: #fff;
+            padding: 1rem 0;
+            text-align: center;
+        }
+
+        .search-container {
+            width: 80%;
+            margin: 1rem auto;
+        }
+
+        #searchInput {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        #schedule-container {
+            width: 80%;
+            margin: 2rem auto;
+        }
+
+        .talk {
+            background: #fff;
+            margin-bottom: 1rem;
+            padding: 1.5rem;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .talk h2 {
+            margin-top: 0;
+        }
+
+        .talk .time {
+            font-weight: bold;
+            color: #555;
+        }
+
+        .talk .speakers {
+            font-style: italic;
+            color: #777;
+        }
+
+        .talk .category {
+            margin-top: 0.5rem;
+        }
+
+        .talk .category span {
+            background: #eee;
+            padding: 0.3rem 0.6rem;
+            border-radius: 3px;
+            font-size: 0.9rem;
+            margin-right: 0.5rem;
+        }
+
+        .break {
+            background: #e0e0e0;
+            text-align: center;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Tech Talks Today</h1>
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Search by category...">
+        </div>
+    </header>
+    <main id="schedule-container">
+        <!-- Schedule will be dynamically generated here -->
+    </main>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const scheduleContainer = document.getElementById('schedule-container');
+            const searchInput = document.getElementById('searchInput');
+            const talks = [
+              {
+                "title": "The Future of Artificial Intelligence",
+                "speakers": ["John Doe"],
+                "category": ["AI", "Machine Learning"],
+                "duration": 60,
+                "description": "A deep dive into the future of AI and its potential impact on society."
+              },
+              {
+                "title": "Building Scalable Web Applications",
+                "speakers": ["Jane Smith"],
+                "category": ["Web Development", "Scalability"],
+                "duration": 60,
+                "description": "Learn how to build web applications that can handle millions of users."
+              },
+              {
+                "title": "Cybersecurity in the Modern Age",
+                "speakers": ["Peter Jones", "Mary Brown"],
+                "category": ["Cybersecurity"],
+                "duration": 60,
+                "description": "An overview of the latest threats in cybersecurity and how to protect against them."
+              },
+              {
+                "title": "The Rise of Quantum Computing",
+                "speakers": ["David Williams"],
+                "category": ["Quantum Computing", "Future Tech"],
+                "duration": 60,
+                "description": "Exploring the principles of quantum computing and its potential applications."
+              },
+              {
+                "title": "Data Science for Business",
+                "speakers": ["Susan Garcia"],
+                "category": ["Data Science", "Business"],
+                "duration": 60,
+                "description": "How to leverage data science to make better business decisions."
+              },
+              {
+                "title": "The Ethics of Technology",
+                "speakers": ["Michael Miller"],
+                "category": ["Ethics", "Technology"],
+                "duration": 60,
+                "description": "A discussion on the ethical implications of emerging technologies."
+              }
+            ];
+
+            renderSchedule(talks);
+
+            searchInput.addEventListener('input', () => {
+                const searchTerm = searchInput.value.toLowerCase();
+                const filteredTalks = talks.filter(talk => 
+                    talk.category.some(cat => cat.toLowerCase().includes(searchTerm))
+                );
+                renderSchedule(filteredTalks);
+            });
+
+            function renderSchedule(talksToRender) {
+                scheduleContainer.innerHTML = '';
+                let currentTime = new Date();
+                currentTime.setHours(10, 0, 0, 0); // Event starts at 10:00 AM
+
+                talksToRender.forEach((talk, index) => {
+                    if (index === 3) {
+                        const breakElement = document.createElement('div');
+                        breakElement.className = 'break';
+                        const breakTime = new Date(currentTime.getTime() + 10 * 60000);
+                        breakElement.innerHTML = `<h2>Lunch Break</h2><div class="time">${formatTime(breakTime)} - ${formatTime(new Date(breakTime.getTime() + 60 * 60000))}</div>`;
+                        scheduleContainer.appendChild(breakElement);
+                        currentTime.setTime(breakTime.getTime() + 60 * 60000);
+                    }
+
+                    const talkElement = document.createElement('div');
+                    talkElement.className = 'talk';
+
+                    const talkTime = new Date(currentTime.getTime());
+                    const endTime = new Date(talkTime.getTime() + talk.duration * 60000);
+
+                    talkElement.innerHTML = `
+                        <div class="time">${formatTime(talkTime)} - ${formatTime(endTime)}</div>
+                        <h2>${talk.title}</h2>
+                        <div class="speakers">By: ${talk.speakers.join(', ')}</div>
+                        <p>${talk.description}</p>
+                        <div class="category">
+                            ${talk.category.map(cat => `<span>${cat}</span>`).join('')}
+                        </div>
+                    `;
+                    scheduleContainer.appendChild(talkElement);
+
+                    currentTime.setTime(endTime.getTime() + 10 * 60000); // 10 minute break
+                });
+            }
+
+            function formatTime(date) {
+                return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            }
+        });
+    </script>
+</body>
+</html>
